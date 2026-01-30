@@ -38,5 +38,7 @@ spring:
 
 # This is main server configuration.
 server:
+  servlet:
+    context-path: /identity/api
   port: 8081
   
