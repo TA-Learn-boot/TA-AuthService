@@ -1,0 +1,98 @@
+@startuml
+title TA-AuthService - Class Diagram (inferred)
+
+package controllers {
+  class AuthController
+  class UserController
+  class HealthCheck
+}
+
+package services {
+  class AuthService
+  class RefreshTokenService
+  class UserInfoService
+  class UserDetailServiceImpl
+  class BlacklistService
+}
+
+package repositories {
+  interface UserInfoRepository <<interface>>
+  interface RefreshTokenRepository <<interface>>
+}
+
+package entities {
+  class UserInfoEntity {
+    - Long userId
+    - String email
+    - String password
+    - String[] roles
+  }
+  class RefreshTokenEntity {
+    - String emailId
+    - String token
+  }
+}
+
+package dto {
+  class UserInfoDto {
+    + String email
+    + String password
+    + String[] roles
+  }
+  class LoginResponse {
+    + String token
+    + String expiresIn
+    + String refreshToken
+  }
+  class RefreshTokenDto {
+    + String emailId
+    + String token
+  }
+}
+
+package utils {
+  class JwtUtil
+  class UserMapper
+}
+
+package security {
+  class JwtAuthFilter
+  class SecurityConfig
+  class PswdEncode
+}
+
+class AuthserviceApplication
+
+' Relationships
+AuthController --> AuthService : uses
+AuthController ..> UserInfoDto
+AuthController ..> LoginResponse
+
+UserController --> UserInfoService : uses
+
+AuthService --> UserDetailServiceImpl : uses
+AuthService --> JwtUtil : signs/verifies
+AuthService --> RefreshTokenService : issues/rotates
+AuthService --> BlacklistService : blacklist tokens
+
+RefreshTokenService --> RefreshTokenRepository : uses
+RefreshTokenRepository --> RefreshTokenEntity : manages
+
+UserInfoService --> UserInfoRepository : uses
+UserInfoService --> UserMapper : maps DTO <-> Entity
+UserInfoService ..> PasswordEncoder : encodes passwords
+
+UserDetailServiceImpl --> UserInfoRepository : loads user
+UserDetailServiceImpl ..|> UserDetailsService
+
+JwtAuthFilter --> JwtUtil : parse/verify
+JwtAuthFilter --> UserInfoService : load user
+JwtAuthFilter --> BlacklistService : check jti
+
+SecurityConfig ..> JwtAuthFilter
+SecurityConfig ..> PswdEncode
+AuthserviceApplication ..> SecurityConfig
+
+UserInfoRepository --> UserInfoEntity : manages
+
+@enduml
