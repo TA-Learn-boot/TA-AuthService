@@ -20,3 +20,6 @@ ENV SPRING_PROFILES_ACTIVE=staging
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "authservice.jar"]
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD curl -f http://localhost:8080/identity/api/actuator/health || exit 1
