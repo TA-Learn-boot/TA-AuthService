@@ -4,7 +4,6 @@ title TA-AuthService - Class Diagram (inferred)
 package controllers {
   class AuthController
   class UserController
-  class HealthCheck
 }
 
 package services {

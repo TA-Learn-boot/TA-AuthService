@@ -19,9 +19,9 @@ public class SecurityConfig {
        
         http.csrf(csrf->csrf.disable())
         .authorizeHttpRequests(auth->auth
-            .requestMatchers("/auth/logout","/auth/validate").authenticated()
-            .requestMatchers("/auth/**").permitAll()
-            .requestMatchers("/health").permitAll()
+            .requestMatchers("/*").authenticated()
+            .requestMatchers("/auth/login","/auth/refresh/*").permitAll()
+            .requestMatchers("/actuator/**").permitAll()
             .requestMatchers("/user/signup").permitAll()
             .anyRequest().authenticated() 
         );

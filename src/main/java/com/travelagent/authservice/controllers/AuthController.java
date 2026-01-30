@@ -37,7 +37,7 @@ public class AuthController {
 
   }
 
-  @GetMapping("/{refreshToken}")
+  @GetMapping("/refresh/{refreshToken}")
   public ResponseEntity<?> RefreshAuth(@PathVariable String refreshToken) {
     var loginResp = authService.RotateAndRefresh(refreshToken);
     if (loginResp == null) {
