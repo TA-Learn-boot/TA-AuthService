@@ -9,7 +9,7 @@ RUN mvn -f pom.xml clean package -DskipTests \
 	&& mkdir -p /app/dist \
 	&& cp target/*.jar /app/dist/authservice.jar || (echo "No jar found in target/" && exit 1)
 
-FROM eclipse-temurin:21-jre-alpine
+FROM  eclipse-temurin:21-jre
 WORKDIR /app
 # Copy the built jar from the builder stage. If multiple jars exist, adjust to the exact name.
 # Use `authservice.jar` as the artifact name so container and pipeline use consistent naming.
