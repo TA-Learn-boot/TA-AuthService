@@ -1,6 +1,7 @@
 package com.travelagent.authservice.securityConfigs;
 
 import java.io.IOException;
+import java.net.http.HttpHeaders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -73,7 +74,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                         user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(userToken);
                 response.setHeader("userName", userInfo.getEmail());
-                response.setHeader("roles", new ObjectMapper().writeValueAsString(userInfo.getRoles()));
+
+                for (String role : userInfo.getRoles()) { 
+                    response.addHeader("roles",role);
+                }
                 filterChain.doFilter(request, response);
 
             } catch (Exception ex) {
