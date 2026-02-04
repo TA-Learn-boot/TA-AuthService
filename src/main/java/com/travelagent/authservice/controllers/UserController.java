@@ -26,7 +26,7 @@ public class UserController {
     public ResponseEntity<?> Signup(@RequestBody UserInfoDto userInfoDto) {
 
         if (!userInfoDto.isValid()) {
-            return ResponseEntity.badRequest().body("Pleas validate the data");
+            return ResponseEntity.badRequest().body("Please validate the data");
         }
         try {
             userInfoService.createUser(userInfoDto);

@@ -19,14 +19,16 @@ public class SecurityConfig {
        
         http.csrf(csrf->csrf.disable())
         .authorizeHttpRequests(auth->auth
-            .requestMatchers("/*").authenticated()
-            .requestMatchers("/auth/login","/auth/refresh/*").permitAll()
-            .requestMatchers("/actuator/**").permitAll()
-            .requestMatchers("/user/signup").permitAll()
-            .anyRequest().authenticated() 
+            .requestMatchers(
+                "/testok",
+                "/auth/login",
+                "/auth/refresh/*",
+                "/actuator/**",
+                "/user/signup"
+            ).permitAll()
+            .anyRequest().authenticated()
         );
-
-        
+ 
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     } 

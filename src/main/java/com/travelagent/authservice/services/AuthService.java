@@ -3,7 +3,6 @@ package com.travelagent.authservice.services;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.travelagent.authservice.Utils.JwtUtil;

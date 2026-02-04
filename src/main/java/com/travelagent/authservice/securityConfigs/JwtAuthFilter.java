@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.travelagent.authservice.Utils.JwtUtil;
 import com.travelagent.authservice.dto.UserInfoDto;
 import com.travelagent.authservice.services.BlacklistService;
@@ -71,7 +72,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(user, jwt,
                         user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(userToken);
-
+                response.setHeader("userName", userInfo.getEmail());
+                response.setHeader("roles", new ObjectMapper().writeValueAsString(userInfo.getRoles()));
                 filterChain.doFilter(request, response);
 
             } catch (Exception ex) {
