@@ -48,17 +48,18 @@ public class AuthController {
   }
 
   @PostMapping("/logout")
-  public void Logout(Authentication auth) {
+  public ResponseEntity<String> Logout(Authentication auth) {
 
     authService.logout(auth.getCredentials().toString());
     String body = "User %s has been logged out successfully".formatted(auth.getName());
+    return ResponseEntity.ok().body(body);
   }
 
   @GetMapping("/validate")
   public ResponseEntity<String> validate(Authentication auth) {
 
     return ResponseEntity.ok("The user %s is authenticated".formatted(auth.getName()));
-    // to be designed.
+    
   }
 
 }

@@ -1,5 +1,7 @@
 package com.travelagent.authservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,6 +16,7 @@ public class UserInfoDto {
          roles = new String[50];
         }
 
+        @JsonIgnore
         public Boolean isValid()
         {
             return email!=null&& !email.isBlank() && 

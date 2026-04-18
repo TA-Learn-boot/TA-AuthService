@@ -11,5 +11,10 @@ import com.travelagent.authservice.entity.UserInfoEntity;
 public interface UserInfoRepository extends JpaRepository<UserInfoEntity,Long> {
 
     public Optional<UserInfoEntity> findOptionalByEmail(String email);
+    public default Optional<UserInfoEntity> deleteOptionalbyEmail(String email) {
+        Optional<UserInfoEntity> entity = findOptionalByEmail(email);
+        entity.ifPresent(this::delete);
+        return entity;
+    }
     
 }

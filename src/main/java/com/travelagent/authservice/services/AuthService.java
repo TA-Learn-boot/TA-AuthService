@@ -71,4 +71,9 @@ public class AuthService {
         blacklistService.Blacklist(jti, ttl); 
     }
 
+    public boolean validateOTP(int otp, String email) {
+     return true;
+      //need to write method to verify OTP. and then invalidate.
+    }
+
 }
